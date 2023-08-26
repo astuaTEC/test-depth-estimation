@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import tensorflow as tf
+import time
 
 # Cargar el modelo TFLite
 interpreter = tf.lite.Interpreter(model_path="./models/modelo-2.tflite")
@@ -13,7 +14,8 @@ HEIGHT, WIDTH = input_details['shape'][1], input_details['shape'][2]
 # Inicializar la cámara web
 cap = cv2.VideoCapture(0)  # 0 para la cámara predeterminada, puedes cambiarlo según tu configuración
 cv2.namedWindow("Input and Depth Map", cv2.WINDOW_NORMAL) 
-
+frame_count = 0
+start_time = time.time()
 while True:
     ret, frame = cap.read()
 
@@ -44,6 +46,17 @@ while True:
 
     # Combinar la imagen de entrada y el mapa de profundidad estimado
     img_out = np.hstack((image, pred_depth_map_colored))
+
+    # Calcular FPS
+    frame_count += 1
+    elapsed_time = time.time() - start_time
+    fps = frame_count / elapsed_time
+
+    # Mostrar FPS en la imagen
+    cv2.putText(img_out, f'FPS: {fps:.2f}', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+
+    cv2.imshow("Input and Depth Map", img_out)
+
 
     cv2.imshow("Input and Depth Map", img_out)
 
