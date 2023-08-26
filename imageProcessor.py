@@ -3,7 +3,7 @@ import numpy as np
 import tensorflow as tf
 
 # Cargar el modelo TFLite
-interpreter = tf.lite.Interpreter(model_path="./models/modelo_preciso.tflite")
+interpreter = tf.lite.Interpreter(model_path="./models/modelo-2.tflite")
 interpreter.allocate_tensors()
 
 # Obtener las dimensiones esperadas de entrada para el modelo
