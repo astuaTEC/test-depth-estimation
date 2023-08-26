@@ -57,9 +57,6 @@ while True:
 
     cv2.imshow("Input and Depth Map", img_out)
 
-
-    cv2.imshow("Input and Depth Map", img_out)
-
     if cv2.waitKey(1) & 0xFF == ord("q"):
         break
 
