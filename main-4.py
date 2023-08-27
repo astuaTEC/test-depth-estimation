@@ -4,7 +4,7 @@ import tensorflow as tf
 import time
 
 # Cargar el modelo TFLite
-interpreter = tf.lite.Interpreter(model_path="./models/modelo-2.tflite")
+interpreter = tf.lite.Interpreter(model_path="./models/modelo-5.tflite")
 interpreter.allocate_tensors()
 
 # Obtener las dimensiones esperadas de entrada para el modelo
@@ -13,9 +13,19 @@ HEIGHT, WIDTH = input_details['shape'][1], input_details['shape'][2]
 
 # Inicializar la cámara web
 cap = cv2.VideoCapture(0)  # 0 para la cámara predeterminada, puedes cambiarlo según tu configuración
-cv2.namedWindow("Input and Depth Map", cv2.WINDOW_NORMAL) 
+cv2.namedWindow("Input and Depth Map", cv2.WINDOW_NORMAL)
+
+# Generar un nombre único para el archivo de salida
+current_time = time.strftime("%Y%m%d-%H%M%S")
+output_filename = f'output_{current_time}.mp4'
+
+# Configuración para guardar el video
+fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+out = cv2.VideoWriter(output_filename, fourcc, 6, (2 * WIDTH, HEIGHT))
+
 frame_count = 0
 start_time = time.time()
+
 while True:
     ret, frame = cap.read()
 
@@ -55,11 +65,15 @@ while True:
     # Mostrar FPS en la imagen
     cv2.putText(img_out, f'FPS: {fps:.2f}', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
+    # Guardar el frame en el video
+    out.write(img_out)
+
     cv2.imshow("Input and Depth Map", img_out)
 
     if cv2.waitKey(1) & 0xFF == ord("q"):
         break
 
-# Liberar la cámara y cerrar ventanas
+# Liberar la cámara, cerrar el video y las ventanas
 cap.release()
+out.release()
 cv2.destroyAllWindows()
