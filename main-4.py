@@ -17,7 +17,7 @@ cv2.namedWindow("Input and Depth Map", cv2.WINDOW_NORMAL)
 
 # Generar un nombre único para el archivo de salida
 current_time = time.strftime("%Y%m%d-%H%M%S")
-output_filename = f'output_{current_time}.mp4'
+output_filename = f'./video/output_{current_time}.mp4'
 
 # Configuración para guardar el video
 fourcc = cv2.VideoWriter_fourcc(*'mp4v')

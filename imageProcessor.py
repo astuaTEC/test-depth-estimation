@@ -3,7 +3,7 @@ import numpy as np
 import tensorflow as tf
 
 # Cargar el modelo TFLite
-interpreter = tf.lite.Interpreter(model_path="./models/modelo-2.tflite")
+interpreter = tf.lite.Interpreter(model_path="./models/modelo-5.tflite")
 interpreter.allocate_tensors()
 
 # Obtener las dimensiones esperadas de entrada para el modelo
@@ -11,7 +11,7 @@ input_details = interpreter.get_input_details()[0]
 HEIGHT, WIDTH = input_details['shape'][1], input_details['shape'][2]
 
 # Cargar la imagen
-image_path = "./imgs/2.jpg"
+image_path = "./imgs/img1.jpg"
 image = cv2.imread(image_path)
 image = cv2.resize(image, (WIDTH, HEIGHT))
 input_data = np.expand_dims(image, axis=0)
