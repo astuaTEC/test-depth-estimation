@@ -52,7 +52,8 @@ while True:
     pred_depth_map_resized = cv2.resize(pred_depth_map.squeeze(), (WIDTH, HEIGHT))
 
     # Convertir el mapa de profundidad redimensionado a una imagen a color para mostrarlo junto a la imagen de entrada
-    pred_depth_map_colored = cv2.applyColorMap(pred_depth_map_resized, cv2.COLORMAP_MAGMA)
+    pred_depth_map_resized_inverted = cv2.bitwise_not(pred_depth_map_resized)
+    pred_depth_map_colored = cv2.applyColorMap(pred_depth_map_resized_inverted, cv2.COLORMAP_MAGMA)
 
     # Combinar la imagen de entrada y el mapa de profundidad estimado
     img_out = np.hstack((image, pred_depth_map_colored))
