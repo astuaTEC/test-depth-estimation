@@ -25,7 +25,7 @@ output_filename = f'./video/output_{current_time}.mp4'
 
 # Configuración para guardar el video
 fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-out = cv2.VideoWriter(output_filename, fourcc, 6, (2 * WIDTH, HEIGHT))
+out = cv2.VideoWriter(output_filename, fourcc, 6, (2 * WIDTH2, HEIGHT2))
 
 # Inicializar el contador de FPS
 fps_counter = FPSCounter()
