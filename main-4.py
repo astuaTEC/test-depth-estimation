@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import tensorflow as tf
 import time
+from fps_limiter import FPSCounter
 
 # Cargar el modelo TFLite
 interpreter = tf.lite.Interpreter(model_path="./models/modelo-5.tflite")
@@ -10,9 +11,12 @@ interpreter.allocate_tensors()
 # Obtener las dimensiones esperadas de entrada para el modelo
 input_details = interpreter.get_input_details()[0]
 HEIGHT, WIDTH = input_details['shape'][1], input_details['shape'][2]
+HEIGHT2, WIDTH2 = 480, 640
 
 # Inicializar la cámara web
 cap = cv2.VideoCapture(0)  # 0 para la cámara predeterminada, puedes cambiarlo según tu configuración
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, WIDTH)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, HEIGHT)
 cv2.namedWindow("Input and Depth Map", cv2.WINDOW_NORMAL)
 
 # Generar un nombre único para el archivo de salida
@@ -23,8 +27,8 @@ output_filename = f'./video/output_{current_time}.mp4'
 fourcc = cv2.VideoWriter_fourcc(*'mp4v')
 out = cv2.VideoWriter(output_filename, fourcc, 6, (2 * WIDTH, HEIGHT))
 
-frame_count = 0
-start_time = time.time()
+# Inicializar el contador de FPS
+fps_counter = FPSCounter()
 
 while True:
     ret, frame = cap.read()
@@ -49,19 +53,18 @@ while True:
     pred_depth_map = (pred_depth_map * 255).astype(np.uint8)
 
     # Redimensionar el mapa de profundidad a las dimensiones de la imagen de entrada
-    pred_depth_map_resized = cv2.resize(pred_depth_map.squeeze(), (WIDTH, HEIGHT))
+    pred_depth_map_resized = cv2.resize(pred_depth_map.squeeze(), (WIDTH2, HEIGHT2))
 
     # Convertir el mapa de profundidad redimensionado a una imagen a color para mostrarlo junto a la imagen de entrada
     pred_depth_map_resized_inverted = cv2.bitwise_not(pred_depth_map_resized)
     pred_depth_map_colored = cv2.applyColorMap(pred_depth_map_resized_inverted, cv2.COLORMAP_MAGMA)
 
     # Combinar la imagen de entrada y el mapa de profundidad estimado
+    image = cv2.resize(frame, (WIDTH2, HEIGHT2))
     img_out = np.hstack((image, pred_depth_map_colored))
 
     # Calcular FPS
-    frame_count += 1
-    elapsed_time = time.time() - start_time
-    fps = frame_count / elapsed_time
+    fps = fps_counter()  # Calcula los FPS
 
     # Mostrar FPS en la imagen
     cv2.putText(img_out, f'FPS: {fps:.2f}', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
