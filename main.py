@@ -17,4 +17,3 @@ def main():
 if __name__ == "__main__":
 
     main()
-    csv_handler.save_data()
