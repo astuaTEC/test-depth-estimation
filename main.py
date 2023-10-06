@@ -11,9 +11,6 @@ input_details = interpreter.get_input_details()[0]
 HEIGHT, WIDTH = input_details['shape'][1], input_details['shape'][2]
 HEIGHT2, WIDTH2 = 480, 640
 
-csv_handler = CSVHandler('result.csv')
-
-@measure_energy(handler=csv_handler)
 def main():
     selectFunctionality(interpreter, input_details, HEIGHT, WIDTH, HEIGHT2, WIDTH2)
     
