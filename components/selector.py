@@ -21,10 +21,10 @@ def show_functionality_options():
     # Imprimir el borde inferior
     print(border)
 
-def take_webcam_video(interpreter, input_details, HEIGHT, WIDTH, HEIGHT2, WIDTH2):
-    videoProcessor(interpreter, input_details, HEIGHT, WIDTH, HEIGHT2, WIDTH2, "webcam")
+def take_webcam_video(interpreter, input_details, HEIGHT, WIDTH, HEIGHT2, WIDTH2, model_name):
+    videoProcessor(interpreter, input_details, HEIGHT, WIDTH, HEIGHT2, WIDTH2, "webcam", model_name)
 
-def list_and_take_video(video_dir, interpreter, input_details, HEIGHT, WIDTH, HEIGHT2, WIDTH2):
+def list_and_take_video(video_dir, interpreter, input_details, HEIGHT, WIDTH, HEIGHT2, WIDTH2, model_name):
     video_files = [f for f in os.listdir(video_dir) if f.endswith('.mp4')]
     if not video_files:
         print(f"No hay videos disponibles en el directorio {video_dir}.")
@@ -38,11 +38,11 @@ def list_and_take_video(video_dir, interpreter, input_details, HEIGHT, WIDTH, HE
         video_choice = int(input("Ingresa el número del video que deseas: "))
         if 1 <= video_choice <= len(video_files):
             video_path = os.path.join(video_dir, video_files[video_choice - 1])
-            videoProcessor(interpreter, input_details, HEIGHT, WIDTH, HEIGHT2, WIDTH2, video_path)
+            videoProcessor(interpreter, input_details, HEIGHT, WIDTH, HEIGHT2, WIDTH2, video_path, model_name)
         else:
             print("Opción no válida")
 
-def list_and_process_image(img_dir, interpreter, input_details, HEIGHT, WIDTH, HEIGHT2, WIDTH2):
+def list_and_process_image(img_dir, interpreter, input_details, HEIGHT, WIDTH, HEIGHT2, WIDTH2, model_name):
     img_files = [f for f in os.listdir(img_dir) if f.endswith(('.jpg', '.jpeg', '.png'))]
     if not img_files:
         print(f"No hay imágenes disponibles en el directorio {img_dir}.")
@@ -59,7 +59,7 @@ def list_and_process_image(img_dir, interpreter, input_details, HEIGHT, WIDTH, H
             depth_map = imageProcessor(interpreter, input_details, image_path, HEIGHT, WIDTH, HEIGHT2, WIDTH2)
             if depth_map is not None:
                 base_name = os.path.splitext(img_files[img_choice - 1])[0]  # Nombre sin extensión
-                output_image_path = f"./results/{base_name}_output_depth_map.jpg"
+                output_image_path = f"./results/{model_name}/{base_name}_output_depth_map.jpg"
                 
                 print("Guardando...")
                 img_out = visualizeResult(cv2.imread(image_path), depth_map, HEIGHT2, WIDTH2)
@@ -73,16 +73,16 @@ def list_and_process_image(img_dir, interpreter, input_details, HEIGHT, WIDTH, H
         else:
             print("Opción no válida")
 
-def selectFunctionality(interpreter, input_details, HEIGHT, WIDTH, HEIGHT2, WIDTH2):
+def selectFunctionality(interpreter, input_details, HEIGHT, WIDTH, HEIGHT2, WIDTH2, model_name):
     show_functionality_options()
     
     choice = int(input("Ingresa el número de la funcionalidad que deseas: "))
     
     if choice == 1:
-        take_webcam_video(interpreter, input_details, HEIGHT, WIDTH, HEIGHT2, WIDTH2)
+        take_webcam_video(interpreter, input_details, HEIGHT, WIDTH, HEIGHT2, WIDTH2, model_name)
     elif choice == 2:
-        list_and_take_video("./video-input", interpreter, input_details, HEIGHT, WIDTH, HEIGHT2, WIDTH2)
+        list_and_take_video("./video-input", interpreter, input_details, HEIGHT, WIDTH, HEIGHT2, WIDTH2, model_name)
     elif choice == 3:
-        list_and_process_image("./imgs", interpreter, input_details, HEIGHT, WIDTH, HEIGHT2, WIDTH2)
+        list_and_process_image("./imgs", interpreter, input_details, HEIGHT, WIDTH, HEIGHT2, WIDTH2, model_name)
     else:
         print("Opción no válida")

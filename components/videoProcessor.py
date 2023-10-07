@@ -8,7 +8,7 @@ import time
 import psutil
 from colorama import Fore, Style
 
-def videoProcessor(interpreter, input_details, HEIGHT, WIDTH, HEIGHT2, WIDTH2, video_source):
+def videoProcessor(interpreter, input_details, HEIGHT, WIDTH, HEIGHT2, WIDTH2, video_source, model_name):
     # Generar un nombre único para el archivo de salida
     current_time = time.strftime("%Y%m%d-%H%M%S")
     # Configuración para guardar el video
@@ -16,13 +16,13 @@ def videoProcessor(interpreter, input_details, HEIGHT, WIDTH, HEIGHT2, WIDTH2, v
 
     if video_source == "webcam":
         cap = cv2.VideoCapture(0)
-        output_filename = f'./video/webcam-output_{current_time}.mp4'
+        output_filename = f'./video/{model_name}/webcam-output_{current_time}.mp4'
     else:
         cap = cv2.VideoCapture(video_source)
         parts = video_source.split('/')
         video_name = parts[-1]
         video_name = video_name.split('.mp4')[0]
-        output_filename = f'./video/video-output_{video_name}.mp4'
+        output_filename = f'./video/{model_name}/video-output_{video_name}.mp4'
 
     out = cv2.VideoWriter(output_filename, fourcc, 10, (2 * WIDTH2, HEIGHT2))
 
