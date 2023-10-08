@@ -3,7 +3,7 @@ import tensorflow as tf
 from components.selector import selectFunctionality
 import os
 
-model_name = "unetv8.tflite"
+model_name = "unetv5.tflite"
 
 # Cargar el modelo TFLite
 interpreter = tf.lite.Interpreter(model_path=f"./models/{model_name}")
