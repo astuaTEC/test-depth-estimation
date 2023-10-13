@@ -1,0 +1,1 @@
+python -m unittest unit-test/video-test.py unit-test/image-test.py

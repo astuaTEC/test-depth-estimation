@@ -46,6 +46,10 @@ Este script realiza estimaciones de profundidad en tiempo real a partir de la en
 
 7. Sigue las instrucciones adicionales según la opción seleccionada.
 
+8. Pruebas unitarias
+
+python -m unittest unit-test/video-test.py unit-test/image-test.py
+
 ## Notas 📝
 
 - Los videos de entrada deben ser copiados a la carpeta `video-input`.
