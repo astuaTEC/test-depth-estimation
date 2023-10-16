@@ -48,7 +48,17 @@ Este script realiza estimaciones de profundidad en tiempo real a partir de la en
 
 8. Pruebas unitarias
 
-python -m unittest unit-test/video-test.py unit-test/image-test.py
+    En computadores con sistemas operativos Linux puede ejecutar el siguiente comando.
+
+    ```bash
+    sh run-unit-test.sh
+    ```
+
+    En computadores con Windows puede ejecutar el siguiente comando.
+
+    ```bash
+    ./run-unit-test.bat
+    ```
 
 ## Notas 📝
 
@@ -67,5 +77,3 @@ Este script fue desarrollado por:
   <br/><br/>
   <img src="./assets/tec-logo.png" alt="Logo del Instituto Tecnológico de Costa Rica" width="300"/>
 </div>
-
-

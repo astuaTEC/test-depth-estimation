@@ -10,15 +10,13 @@ import os
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(SCRIPT_DIR))
 
-def videoProcessor(interpreter, input_details, HEIGHT, WIDTH, HEIGHT2, WIDTH2, video_source, model_name):
-    # Generar un nombre único para el archivo de salida
-    current_time = time.strftime("%Y%m%d-%H%M%S")
+def videoProcessor(interpreter, input_details, HEIGHT, WIDTH, HEIGHT2, WIDTH2, video_source, wait_time=None):
     # Configuración para guardar el video
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
 
     if video_source == "webcam":
         cap = cv2.VideoCapture(0)
-        output_filename = f'./unit-test-/video/webcam-output.mp4'
+        output_filename = f'./unit-test/video/webcam-output.mp4'
     else:
         cap = cv2.VideoCapture(video_source)
         parts = video_source.split('/')
@@ -30,6 +28,8 @@ def videoProcessor(interpreter, input_details, HEIGHT, WIDTH, HEIGHT2, WIDTH2, v
 
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, WIDTH)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, HEIGHT)
+
+    start_time = time.time()
 
     while True:
         ret, frame = cap.read()
@@ -47,6 +47,10 @@ def videoProcessor(interpreter, input_details, HEIGHT, WIDTH, HEIGHT2, WIDTH2, v
 
         if cv2.waitKey(1) & 0xFF == ord("q"):
             break
+        if wait_time:
+            # Verificar si ha pasado el tiempo deseado
+            if time.time() - start_time > wait_time:
+                break
 
     cap.release()
     out.release()
