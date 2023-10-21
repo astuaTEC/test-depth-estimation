@@ -3,7 +3,6 @@ import cv2
 from components.videoProcessor import videoProcessor
 from components.imageProcessor import imageProcessor
 from components.visualizeResult import visualizeResult
-import numpy as np
 from colorama import Fore, Style
 
 border = f"{Fore.CYAN}{'*' * 30}{Style.RESET_ALL}"  # Línea de borde
