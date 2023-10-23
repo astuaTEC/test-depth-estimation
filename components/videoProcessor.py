@@ -15,7 +15,7 @@ def videoProcessor(interpreter, input_details, HEIGHT, WIDTH, HEIGHT2, WIDTH2, v
         output_filename = f'./video/webcam-output_{current_time}.mp4'
     else:
         cap = cv2.VideoCapture(video_source)
-        parts = video_source.split('/')
+        parts = video_source.split('\\')
         video_name = parts[-1]
         video_name = video_name.split('.mp4')[0]
         output_filename = f'./video/video-output_{video_name}.mp4'
