@@ -51,6 +51,14 @@ Este script realiza estimaciones de profundidad en tiempo real a partir de la en
 - Los videos de entrada deben ser copiados a la carpeta `video-input`.
 - Las imágenes de entrada deben ser copiadas a la carpeta `imgs`.
 
+## Entrenamiento 📚
+Para poder entrenar el modelo por cuenta propia, solo siga los siguientes pasos:
+1. Cree una cuenta en Kaggle (https://www.kaggle.com/).
+2. Cree un proyecto en blanco y luego tiene que subir el archivo `unetv7-kaggle.ipynb` que se encuentra en la raíz del proyecto (`File -> Import Notebook`).
+3. En el menú que se encuentra a la derecha del editor de Kaggle, en la parte de `Data`, seleccione `Add data`, busque y seleccione el conjunto de entrenamiento `NYU Depth V2`.
+4. En `Notebook options`, seleccione como acelerador la `GPU P100` para que el entrenamiento sea más rapido. Además habilite la opción `Internet on`.
+5. En el menú superior seleccione `Run All` y espere a que el entrenamiento termine.
+
 ## Créditos 🖋️
 
 Este script fue desarrollado por:
